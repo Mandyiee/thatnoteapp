@@ -4,7 +4,7 @@ from flask import Flask, render_template,request,redirect, url_for
 import uuid 
 from flask_ckeditor import CKEditor
 from datetime import date
-#print(os.getcwd())
+
 
 app = Flask(__name__)
 app.config['CKEDITOR_HEIGHT'] = 500
@@ -149,4 +149,5 @@ def delete(ids):
 def not_found(e):
   return render_template("404.html")
 
-app.run()
+if __name__ == '__main__':
+  app.run(debug=True, port=35607)
