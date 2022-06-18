@@ -149,4 +149,5 @@ def delete(ids):
 def not_found(e):
   return render_template("404.html")
 
-app.run(debug=True, port=35607)
+if __name__ == '__main__':
+  app.run(debug=True, port=35607)
