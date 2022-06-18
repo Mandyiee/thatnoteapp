@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>new note</title>
+    <link href="{{url_for('static', filename = 'style.css')}}" rel="stylesheet">
+
+    <script src="https://cdn.ckeditor.com/4.10.0/basic/ckeditor.js"></script>
+
+</head>
+
+<body>
+
+    <main class="new-main">
+
+        <form class="" action="/new" method="POST" accept-charset="utf-8">
+
+            <div class="title-div">
+                <textarea name="title" id=title rows="3" cols="40" placeholder="Title" maxlength="50"></textarea>
+            </div>
+
+            <div class="content-div">
+
+                {{ ckeditor.create() }}
+            </div>
+
+            <div class="buttons">
+                <div class="but1">
+                    <a href="/"><button type="button"><img class="" src="{{url_for('static',filename = 'image/back.png')}}" alt="" /></button></a>
+                </div>
+                <div class="but2">
+                    <button type="submit"><img class="" src="{{url_for('static',filename = 'image/save.png')}}" alt="" /></button>
+                </div>
+            </div>
+        </form>
+        {{ ckeditor.load()}} {{ ckeditor.config(custom_config="uiColor: '#FFFFFF'") }}
+
+    </main>
+    <script type="text/javascript" charset="utf-8">
+    </script>
+</body>
+
+</html>

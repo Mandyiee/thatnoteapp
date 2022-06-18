@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static', filename = 'style.css')}}" rel="stylesheet">
+    <title>Home page</title>
+
+</head>
+
+<body>
+    <div class="new-opt">
+        <a href="/new">
+            <img id="" src="{{url_for('static',filename = 'image/plus.png')}}" alt="" />
+        </a>
+    </div>
+    <header class="">
+        <div class="head-img">
+            <img src="https://see.fontimg.com/api/renderfont4/1G5ve/eyJyIjoiZnMiLCJoIjo3MSwidyI6MTAwMCwiZnMiOjcxLCJmZ2MiOiIjMDAwMDAwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/Tm90ZXM/chevadisplay-regular.png" alt="Notes" srcset="">
+        </div>
+        <h1>All Notes</h1>
+    </header>
+
+
+    <main class="main">
+        <div class="grid">
+            {% if notes|length == 0 %}
+            <p class="none"> No Notes</p>
+            {% else %} {% for note in notes|reverse %} {% if note.content|length
+            < 250 %} <div class="item small">
+                <a href="view/{{note.ids}}">
+                    <h3 class="title">{{ note.title }}</h3>
+                    <p><small>{{ note.date }}</small></p>
+                    <div class="">
+
+                        {{ note.content|safe|truncate(60)}} </div>
+                </a>
+
+        </div>
+        {% elif note.content|length
+        < 450 %} <div class="item medium">
+            <a href="view/{{note.ids}}">
+                <h2 class="title">{{ note.title }}</h2>
+                <p><small>{{ note.date }}</small></p>
+                <div class="">
+
+                    {{ note.content|safe|truncate(130)}}
+                </div>
+            </a>
+            </div>
+            {% else %}
+            <div class="item large">
+                <a href="view/{{note.ids}}">
+                    <h2 class="title">{{ note.title }}</h2>
+                    <p><small>{{ note.date }}</small></p>
+                    <div class="">
+
+                        {{ note.content|safe|truncate(220)}}
+                    </div>
+                </a>
+            </div>
+            {% endif %} {% endfor %} {% endif %}
+            </div>
+
+    </main>
+
+
+
+
+    <script src="{{url_for('static', filename = 'main.js')}}"></script>
+</body>
+
+</html>
