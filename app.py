@@ -4,12 +4,15 @@ from flask import Flask, render_template,request,redirect, url_for
 import uuid 
 from flask_ckeditor import CKEditor
 from datetime import date
+import socket
 
 
 app = Flask(__name__)
 app.config['CKEDITOR_HEIGHT'] = 500
 app.config['CKEDITOR_PKG_TYPE'] = 'basic'
 ckeditor = CKEditor(app)
+
+
 
 def start():
   folder = os.path.join(Path.home(), '.dais')
@@ -37,15 +40,33 @@ def index():
   start()
   folder = os.path.join(Path.home(), '.dais')
   os.chdir(folder)
+  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  s.connect(("8.8.8.8", 80))
+
+  ipaddress = s.getsockname()[0]
   noteObject = shelve.open('daisdb', 'r', writeback = True)
   notes = noteObject['notes']
-  return render_template('index.html',notes=notes)
+  
+  pnotes = []
+  print(notes)
+  
+  for i in notes:
+    if i['ipaddress'] == ipaddress:
+      pnotes.append(i)
+      
+  return render_template('index.html',notes=pnotes)
   
   
 @app.route('/new',methods = ['GET','POST'])
 def new():
   folder = os.path.join(Path.home(), '.dais')
   os.chdir(folder)
+  
+  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  s.connect(("8.8.8.8", 80))
+
+  ipaddress = s.getsockname()[0]
+ 
   if request.method == 'POST':
     ids = uuid.uuid4()
     title = request.form['title']
@@ -53,6 +74,7 @@ def new():
     current_date = date.today()
     
     obj = {
+      'ipaddress' : ipaddress,
       'ids':ids,
       'title':title,
       'content': data,
