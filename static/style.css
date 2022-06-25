@@ -95,7 +95,7 @@ header h1 {
 
 .title-div textarea {
     width: 100%;
-    font-size: 1.9rem;
+    font-size: 2.9rem;
     outline: none;
     border: 1px solid transparent;
     padding: 20px 25px;
@@ -119,6 +119,10 @@ header h1 {
     width: 100%;
 }
 
+.title {
+    text-transform: capitalize;
+}
+
 .view-main {
     width: 100vw;
 }
@@ -137,14 +141,15 @@ header h1 {
 }
 
 .view-head h2 {
-    padding: 1.6rem 1.4rem;
-    font-size: 1.5rem;
+    padding: 1.6rem 3.4rem;
+    font-size: 2.5rem;
     height: 100%;
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-transform: capitalize;
 }
 
 .view-head p {
@@ -154,7 +159,8 @@ header h1 {
 }
 
 .view-content {
-    padding: 20px 73px;
+    padding: 20px 6rem;
+    font-size: 1.4rem;
 }
 
 .view-options {
@@ -267,6 +273,7 @@ button {
 
 .new-main {
     margin-top: 5rem;
+    padding: 1px 6rem;
 }
 
 body {
@@ -284,7 +291,7 @@ body {
     margin-top: 50vh;
 }
 
-@media screen and (max-width:670px) {
+@media screen and (max-width:700px) {
     .view-body {
         width: 100%;
         margin: 0 auto;
@@ -295,13 +302,21 @@ body {
     }
     .view-content {
         padding: 20px 35px;
+        font-size: 1rem;
     }
     .view-head {
         height: 25vh;
     }
+    .new-main {
+        margin-top: 5rem;
+        padding: 1px 1rem;
+    }
+    .title-div textarea {
+        font-size: 2rem;
+    }
 }
 
-@media screen and (min-width:670px) {
+@media screen and (min-width:700px) {
     .grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

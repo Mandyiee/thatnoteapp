@@ -4,7 +4,8 @@ from flask import Flask, render_template,request,redirect, url_for
 import uuid 
 from flask_ckeditor import CKEditor
 from datetime import date
-import socket
+
+import requests
 
 
 app = Flask(__name__)
@@ -40,15 +41,14 @@ def index():
   start()
   folder = os.path.join(Path.home(), '.dais')
   os.chdir(folder)
-  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-  s.connect(("8.8.8.8", 80))
-
-  ipaddress = s.getsockname()[0]
+  
+  resp = requests.get('https://api.ipify.org/')
+  ipaddress = resp.text
   noteObject = shelve.open('daisdb', 'r', writeback = True)
   notes = noteObject['notes']
   
   pnotes = []
-  print(notes)
+
   
   for i in notes:
     if i['ipaddress'] == ipaddress:
@@ -62,16 +62,14 @@ def new():
   folder = os.path.join(Path.home(), '.dais')
   os.chdir(folder)
   
-  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-  s.connect(("8.8.8.8", 80))
 
-  ipaddress = s.getsockname()[0]
- 
   if request.method == 'POST':
     ids = uuid.uuid4()
     title = request.form['title']
     data = request.form.get('ckeditor')
     current_date = date.today()
+    ipaddress = request.form['ipaddress']
+    
     
     obj = {
       'ipaddress' : ipaddress,

@@ -8,7 +8,7 @@
 
     <title>new note</title>
     <link href="{{url_for('static', filename = 'style.css')}}" rel="stylesheet">
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.10.0/basic/ckeditor.js"></script>
 
 </head>
@@ -27,6 +27,7 @@
 
                 {{ ckeditor.create() }}
             </div>
+            <input type="hidden" name="ipaddress" id="hide">
 
             <div class="buttons">
                 <div class="but1">
@@ -41,6 +42,17 @@
 
     </main>
     <script type="text/javascript" charset="utf-8">
+        let start = document.getElementById('title')
+        start.addEventListener('focus', async() => {
+            let result = await axios.get(`https://api.ipify.org?format=json`, {
+                mode: 'cors',
+                credentials: 'include'
+            });
+
+            let data = await result.data;
+            document.getElementById('hide').value = data.ip
+
+        })
     </script>
 </body>
 
