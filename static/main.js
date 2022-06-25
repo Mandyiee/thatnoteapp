@@ -9,15 +9,3 @@ function scrollFunction() {
 
     }
 }
-
-// window.onload = function() {
-//     let result = await axios.get(`https://api.ipify.org?format=json`, {
-//         mode: 'cors',
-//         credentials: 'include'
-//     });
-
-//     let data = await result.data;
-//     document.getElementById('hide').value = data.ip
-//     console.log(data.ip)
-//     console.log(document.getElementById('hide').value)
-// }
