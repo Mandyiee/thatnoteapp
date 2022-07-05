@@ -4,9 +4,10 @@ from flask import Flask, render_template,request,redirect, url_for
 import uuid 
 from flask_ckeditor import CKEditor
 from datetime import date
-
-import requests
-
+import datetime
+import flask
+import requests,json,ast
+import socket
 
 app = Flask(__name__)
 app.config['CKEDITOR_HEIGHT'] = 500
@@ -36,27 +37,70 @@ def start():
     noteObject['notes'] = note
     noteObject.close()
     
-@app.route('/')
+@app.route('/',methods = ['GET','POST'])
 def index():
-  start()
-  folder = os.path.join(Path.home(), '.dais')
-  os.chdir(folder)
   
-  resp = requests.get('https://api.ipify.org/')
-  ipaddress = resp.text
-  noteObject = shelve.open('daisdb', 'r', writeback = True)
-  notes = noteObject['notes']
+  if request.method == 'POST':
+    
+    folder = os.path.join(Path.home(), '.dais')
+    os.chdir(folder)
   
-  pnotes = []
+    resp = requests.get('https://api.ipify.org/')
+    ipaddress1 = resp.text
+    noteObject = shelve.open('daisdb', 'r', writeback = True)
+    note = noteObject['notes']
+  
+    ipaddress3 = flask.request.remote_addr
+    hostname = socket. gethostname()
+    ipaddress2 = socket. gethostbyname(hostname)
+    ipaddress4 = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
 
+    print(ipaddress1,ipaddress2,ipaddress3,ipaddress4)
+    
+    resp = request.get_data('data')
+    
+    
+    
+    resp = json.loads(resp.decode("utf-8").replace("'",'"'))
+
+    
+    
+    ipaddress = resp['data']['ip'] 
+    gnotes = []
+    
+    for i in note:
+      if i['ipaddress'] == ipaddress:
+        print(ipaddress == i['ipaddress'])
+        print(i)
+        gnotes.append(i)
+    
+    print(gnotes)  
+    return redirect('/ne')
+  else:
+    start()
+    pnotes = []
+    print(' return render_template(index.html,notes=pnotes)')
+    return render_template('index.html',notes=pnotes)
+    
   
-  for i in notes:
-    if i['ipaddress'] == ipaddress:
-      pnotes.append(i)
-      
-  return render_template('index.html',notes=pnotes)
-  
-  
+@app.route('/<ip>')
+def index_two(ip):
+    ipaddress = ip
+    folder = os.path.join(Path.home(), '.dais')
+    os.chdir(folder)
+    
+    noteObject = shelve.open('daisdb', 'r', writeback = True)
+    note = noteObject['notes']
+    
+    gnotes = []
+    
+    for i in note:
+      if i['ipaddress'] == ipaddress:
+        print(ipaddress == i['ipaddress'])
+        print(i)
+        gnotes.append(i)
+    return render_template('main_index.html',notes=gnotes)
+    
 @app.route('/new',methods = ['GET','POST'])
 def new():
   folder = os.path.join(Path.home(), '.dais')

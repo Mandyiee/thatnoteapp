@@ -9,3 +9,24 @@ function scrollFunction() {
 
     }
 }
+
+
+window.addEventListener('load', async() => {
+    url = "/"
+
+    let result = await axios.get(`https://api.ipify.org?format=json`, {
+        mode: 'cors',
+        credentials: 'include'
+    });
+
+    let data = await result.data;
+    console.log(data)
+    let res = axios.post(url, {
+            data
+        })
+        .then((response) => {
+            window.location.assign('/' + data.ip);
+        }, (error) => {
+            console.log(error);
+        });
+})

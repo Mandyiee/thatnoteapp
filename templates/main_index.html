@@ -28,7 +28,7 @@
     <main class="main">
         <div class="grid">
             {% if notes|length == 0 %}
-            <p class="none"> No Notes </p>
+            <p class="none"> No Notes</p>
             {% else %} {% for note in notes|reverse %} {% if note.content|length
             < 250 %} <div class="item small">
                 <a href="view/{{note.ids}}">
@@ -70,7 +70,21 @@
 
 
 
-    <script src="{{url_for('static', filename = 'main.js')}}"></script>
+    <script>
+        window.onscroll = function() {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                document.querySelector("header").style.height = "10vh";
+
+            } else {
+                document.querySelector("header").style.height = "50vh";
+
+            }
+        }
+    </script>
 </body>
 
 </html>
