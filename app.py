@@ -45,26 +45,13 @@ def index():
     folder = os.path.join(Path.home(), '.dais')
     os.chdir(folder)
   
-    resp = requests.get('https://api.ipify.org/')
-    ipaddress1 = resp.text
     noteObject = shelve.open('daisdb', 'r', writeback = True)
     note = noteObject['notes']
-  
-    ipaddress3 = flask.request.remote_addr
-    hostname = socket. gethostname()
-    ipaddress2 = socket. gethostbyname(hostname)
-    ipaddress4 = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
-
-    print(ipaddress1,ipaddress2,ipaddress3,ipaddress4)
     
     resp = request.get_data('data')
     
-    
-    
     resp = json.loads(resp.decode("utf-8").replace("'",'"'))
 
-    
-    
     ipaddress = resp['data']['ip'] 
     gnotes = []
     
