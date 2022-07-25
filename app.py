@@ -58,15 +58,12 @@ def index():
     for i in note:
       if i['ipaddress'] == ipaddress:
         print(ipaddress == i['ipaddress'])
-        print(i)
         gnotes.append(i)
     
-    print(gnotes)  
     return redirect('/ne')
   else:
     start()
     pnotes = []
-    print(' return render_template(index.html,notes=pnotes)')
     return render_template('index.html',notes=pnotes)
     
   
@@ -83,8 +80,6 @@ def index_two(ip):
     
     for i in note:
       if i['ipaddress'] == ipaddress:
-        print(ipaddress == i['ipaddress'])
-        print(i)
         gnotes.append(i)
     return render_template('main_index.html',notes=gnotes)
     
@@ -111,7 +106,7 @@ def new():
     }
   
     noteObject = shelve.open('daisdb', writeback = True)
-    noteObject['notes'].append(obj)
+    noteObject.get('notes').append(obj)
     
     noteObject.sync()
     

@@ -28,7 +28,7 @@
     <main class="main">
         <div class="grid">
             {% if notes|length == 0 %}
-            <p class="none"> No Notes </p>
+            <p class="none"> Loading...</p>
             {% else %} {% for note in notes|reverse %} {% if note.content|length
             < 250 %} <div class="item small">
                 <a href="view/{{note.ids}}">
